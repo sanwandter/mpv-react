@@ -1,0 +1,1274 @@
+// Variables
+$primary-color: #ff6b35;
+$secondary-color: #f7931e;
+$success-color: #4caf50;
+$danger-color: #f44336;
+$text-color: #333;
+$text-light: #666;
+$border-color: #ddd;
+$bg-light: #f5f5f5;
+$white: #fff;
+
+// Reset básico
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: $text-color;
+  background-color: $bg-light;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+// Navbar
+.navbar {
+  background: linear-gradient(135deg, $primary-color 0%, $secondary-color 100%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+    @media (max-width: 768px) {
+      padding: 0.75rem 1rem;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.75rem;
+    }
+  }
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    @media (max-width: 768px) {
+      justify-content: center;
+    }
+  }
+
+  &__logo {
+    font-size: 2rem;
+
+    @media (max-width: 768px) {
+      font-size: 1.75rem;
+    }
+  }
+
+  &__title {
+    color: $white;
+    font-size: 1.5rem;
+    font-weight: 700;
+
+    @media (max-width: 768px) {
+      font-size: 1.25rem;
+    }
+  }
+
+  &__links {
+    list-style: none;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+
+    @media (max-width: 768px) {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem;
+      width: 100%;
+    }
+  }
+
+  &__link {
+    color: $white;
+    text-decoration: none;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+    white-space: nowrap;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @media (max-width: 768px) {
+      padding: 0.75rem 0.5rem;
+      font-size: 0.875rem;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    &--active {
+      background: rgba(255, 255, 255, 0.25);
+      font-weight: 600;
+    }
+
+    &--cart {
+      gap: 0.5rem;
+    }
+  }
+
+  &__badge {
+    background: $danger-color;
+    color: $white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+}
+
+// Page layout
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  flex: 1;
+
+  &__header {
+    margin-bottom: 2rem;
+  }
+
+  &__title {
+    font-size: 2.5rem;
+    color: $text-color;
+    margin-bottom: 0.5rem;
+  }
+
+  &__subtitle {
+    font-size: 1.125rem;
+    color: $text-light;
+  }
+}
+
+// Buttons
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+
+  &--primary {
+    background: linear-gradient(135deg, $primary-color 0%, $secondary-color 100%);
+    color: $white;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba($primary-color, 0.3);
+    }
+  }
+
+  &--secondary {
+    background: $white;
+    color: $primary-color;
+    border: 2px solid $primary-color;
+
+    &:hover {
+      background: $primary-color;
+      color: $white;
+    }
+  }
+
+  &--large {
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+  }
+
+  &--block {
+    width: 100%;
+    margin-bottom: 0.75rem;
+  }
+}
+
+// Filters
+.filters {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 0.75rem 1.5rem;
+  border: 2px solid $border-color;
+  background: $white;
+  border-radius: 25px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    border-color: $primary-color;
+    color: $primary-color;
+  }
+
+  &--active {
+    background: $primary-color;
+    color: $white;
+    border-color: $primary-color;
+  }
+}
+
+// Recipe Card
+.recipes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.recipe-card {
+  background: $white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  &__image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+
+  &__content {
+    padding: 1.25rem;
+  }
+
+  &__title {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+    color: $text-color;
+  }
+
+  &__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  &__meta-item {
+    font-size: 0.875rem;
+    color: $text-light;
+  }
+
+  &__ingredients {
+    margin-bottom: 1rem;
+
+    &-title {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      font-size: 0.875rem;
+    }
+
+    &-list {
+      list-style: none;
+      font-size: 0.875rem;
+      color: $text-light;
+
+      li {
+        margin-bottom: 0.25rem;
+      }
+    }
+
+    &-more {
+      color: $primary-color;
+      font-weight: 600;
+    }
+  }
+
+  &__button {
+    width: 100%;
+    padding: 0.75rem;
+    background: $primary-color;
+    color: $white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: darken($primary-color, 10%);
+    }
+  }
+}
+
+// Modal
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal {
+  background: $white;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow: auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+
+  &__header {
+    padding: 1.5rem;
+    border-bottom: 1px solid $border-color;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__title {
+    font-size: 1.5rem;
+    color: $text-color;
+  }
+
+  &__close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: $text-light;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: $bg-light;
+      color: $text-color;
+    }
+  }
+
+  &__content {
+    padding: 1.5rem;
+  }
+}
+
+.recipe-details {
+  &__image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+  }
+
+  &__meta {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid $border-color;
+
+    span {
+      font-size: 0.938rem;
+      color: $text-light;
+    }
+  }
+
+  &__ingredients {
+    list-style: none;
+    margin: 1rem 0;
+
+    li {
+      padding: 0.75rem;
+      border-bottom: 1px solid $bg-light;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .price {
+        color: $primary-color;
+        font-weight: 600;
+      }
+    }
+  }
+
+  &__total {
+    padding: 1rem;
+    background: $bg-light;
+    border-radius: 8px;
+    margin: 1rem 0;
+    font-size: 1.125rem;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+}
+
+.add-to-menu {
+  .form-group {
+    margin-bottom: 1.5rem;
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: $text-color;
+    }
+  }
+
+  .select-input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid $border-color;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+    }
+  }
+
+  .modal-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+}
+
+// Weekly Planner
+.weekly-planner {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.day-row {
+  background: $white;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  &__title {
+    font-size: 1.125rem;
+    margin-bottom: 1rem;
+    color: $primary-color;
+    font-weight: 700;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid $bg-light;
+  }
+
+  &__meals {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+
+    @media (max-width: 900px) {
+      gap: 0.5rem;
+    }
+  }
+}
+
+.meal-slot {
+  border: 2px dashed $border-color;
+  border-radius: 8px;
+  padding: 0.75rem;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: 900px) {
+    padding: 0.5rem;
+    min-height: 150px;
+  }
+
+  &__header {
+    margin-bottom: 0.5rem;
+  }
+
+  &__type {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: $text-light;
+
+    @media (max-width: 900px) {
+      font-size: 0.75rem;
+    }
+  }
+
+  &__content {
+    position: relative;
+    flex: 1;
+  }
+
+  &__image {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+
+    @media (max-width: 900px) {
+      height: 70px;
+    }
+  }
+
+  &__name {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: $text-color;
+
+    @media (max-width: 900px) {
+      font-size: 0.75rem;
+    }
+  }
+
+  &__remove {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: rgba(244, 67, 54, 0.9);
+    color: $white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: $danger-color;
+      transform: scale(1.1);
+    }
+  }
+
+  &__empty {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    color: $primary-color;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    padding: 2rem 1rem;
+    border-radius: 6px;
+
+    &:hover {
+      background: lighten($primary-color, 45%);
+      color: darken($primary-color, 10%);
+    }
+  }
+}
+
+// Shopping List
+.shopping-summary {
+  display: flex;
+  justify-content: space-around;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  background: $white;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  &--sticky {
+    position: sticky;
+    top: 140px;
+    z-index: 10;
+
+    @media (max-width: 768px) {
+      top: 160px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.75rem 0.5rem;
+    gap: 0.25rem;
+  }
+
+  &__stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.75rem 0.5rem;
+    border-radius: 8px;
+    flex: 1;
+    min-width: 0;
+
+    @media (max-width: 768px) {
+      padding: 0.5rem 0.25rem;
+    }
+
+    &--highlight {
+      background: linear-gradient(135deg, $primary-color 0%, $secondary-color 100%);
+      color: $white;
+
+      .shopping-summary__number,
+      .shopping-summary__label {
+        color: $white;
+      }
+    }
+  }
+
+  &__label {
+    font-size: 0.75rem;
+    color: $text-light;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: center;
+
+    @media (max-width: 768px) {
+      font-size: 0.6rem;
+      margin-bottom: 0.25rem;
+      letter-spacing: 0.3px;
+    }
+  }
+
+  &__number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $primary-color;
+
+    @media (max-width: 768px) {
+      font-size: 1.125rem;
+    }
+  }
+}
+
+.shopping-list {
+  margin-bottom: 2rem;
+}
+
+.ingredient-category {
+  background: $white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  &__title {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: $text-color;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid $bg-light;
+  }
+}
+
+.ingredient-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.ingredient-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.75rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: $bg-light;
+  }
+
+  &--owned {
+    opacity: 0.5;
+
+    .ingredient-item__name {
+      text-decoration: line-through;
+    }
+  }
+
+  &__checkbox {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    input[type="checkbox"] {
+      margin-right: 0.5rem;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  &__name {
+    font-weight: 600;
+    color: $text-color;
+  }
+
+  &__amount {
+    font-size: 0.875rem;
+    color: $text-light;
+  }
+
+  &__recipes {
+    font-size: 0.75rem;
+    color: $text-light;
+    font-style: italic;
+  }
+
+  &__price {
+    font-weight: 700;
+    color: $primary-color;
+    font-size: 1.125rem;
+  }
+}
+
+// Checkout
+.checkout-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.cart-category {
+  background: $white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  &__title {
+    font-size: 1.125rem;
+    margin-bottom: 1rem;
+    color: $text-color;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid $bg-light;
+  }
+}
+
+.cart-item {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid $bg-light;
+
+  @media (max-width: 600px) {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &__info {
+    flex: 2;
+    min-width: 150px;
+
+    h4 {
+      margin-bottom: 0.25rem;
+    }
+  }
+
+  &__name {
+    font-size: 1rem;
+    color: $text-color;
+  }
+
+  &__unit {
+    font-size: 0.875rem;
+    color: $text-light;
+  }
+
+  &__recipes {
+    font-size: 0.75rem;
+    color: $primary-color;
+    font-style: italic;
+    margin-top: 0.25rem;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+
+    @media (max-width: 600px) {
+      width: 100%;
+      justify-content: space-between;
+    }
+  }
+
+  &__controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__btn {
+    width: 32px;
+    height: 32px;
+    border: 2px solid $primary-color;
+    background: $white;
+    color: $primary-color;
+    border-radius: 6px;
+    font-size: 1.25rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: $primary-color;
+      color: $white;
+    }
+  }
+
+  &__quantity {
+    font-weight: 700;
+    min-width: 30px;
+    text-align: center;
+  }
+
+  &__price {
+    font-weight: 700;
+    color: $primary-color;
+    font-size: 1.125rem;
+    min-width: 70px;
+    text-align: right;
+  }
+
+  &__remove {
+    background: $danger-color;
+    color: $white;
+    border: none;
+    border-radius: 6px;
+    width: 36px;
+    height: 36px;
+    font-size: 1.125rem;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+
+    &:hover {
+      background: darken($danger-color, 10%);
+      transform: scale(1.05);
+    }
+  }
+}
+
+.checkout-summary {
+  position: sticky;
+  top: 100px;
+  height: fit-content;
+}
+
+.summary-card {
+  background: $white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+
+  &__title {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: $text-color;
+  }
+
+  &__row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    font-size: 1rem;
+  }
+
+  &__free {
+    color: $success-color;
+    font-weight: 700;
+  }
+
+  &__divider {
+    height: 2px;
+    background: $bg-light;
+    margin: 0.75rem 0;
+  }
+
+  &__total {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: $text-color;
+  }
+}
+
+.delivery-info {
+  background: $bg-light;
+  border-radius: 12px;
+  padding: 1.5rem;
+
+  h4 {
+    margin-bottom: 1rem;
+    color: $text-color;
+  }
+
+  p {
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    color: $text-light;
+  }
+}
+
+// Empty State
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+
+  &__icon {
+    font-size: 5rem;
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+    margin-bottom: 0.75rem;
+    color: $text-color;
+  }
+
+  p {
+    font-size: 1.125rem;
+    color: $text-light;
+    margin-bottom: 2rem;
+  }
+}
+
+// Action Bar
+.action-bar {
+  position: sticky;
+  bottom: 0;
+  background: $white;
+  padding: 1.5rem;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px 12px 0 0;
+  text-align: center;
+}
+
+// Success Message
+.success-message {
+  background: lighten($success-color, 45%);
+  border: 2px solid $success-color;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  margin: 2rem 0;
+
+  &__icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  p {
+    color: darken($success-color, 20%);
+    font-weight: 600;
+    font-size: 1.125rem;
+  }
+}
+
+// Recipe Selection Modal
+.recipe-selection {
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    max-height: 500px;
+    overflow-y: auto;
+  }
+
+  &__item {
+    background: $white;
+    border: 2px solid $border-color;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      border-color: $primary-color;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba($primary-color, 0.2);
+    }
+  }
+
+  &__image {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+  }
+
+  &__info {
+    padding: 0.75rem;
+
+    h4 {
+      font-size: 0.938rem;
+      margin-bottom: 0.5rem;
+      color: $text-color;
+    }
+  }
+
+  &__meta {
+    font-size: 0.75rem;
+    color: $text-light;
+  }
+}
+
+// New Recipe Form
+.new-recipe-form {
+  max-height: 70vh;
+  overflow-y: auto;
+
+  @media (max-width: 768px) {
+    max-height: 80vh;
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: $text-color;
+      font-size: 0.938rem;
+
+      @media (max-width: 768px) {
+        font-size: 0.875rem;
+      }
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid $border-color;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+
+      @media (max-width: 768px) {
+        padding: 0.625rem;
+        font-size: 0.875rem;
+      }
+
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+      }
+    }
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+  }
+
+  h3 {
+    margin-bottom: 1rem;
+    color: $text-color;
+    font-size: 1.25rem;
+
+    @media (max-width: 768px) {
+      font-size: 1.125rem;
+    }
+  }
+}
+
+.ingredients-list {
+  margin-bottom: 1rem;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  padding: 0.5rem;
+}
+
+.ingredient-item-new {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  border-bottom: 1px solid $bg-light;
+  font-size: 0.875rem;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  span {
+    flex: 1;
+  }
+}
+
+.btn-remove-small {
+  background: $danger-color;
+  color: $white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: darken($danger-color, 10%);
+    transform: scale(1.1);
+  }
+}
+
+.ingredient-form {
+  background: $bg-light;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+
+  @media (max-width: 768px) {
+    padding: 0.75rem;
+  }
+
+  .form-row {
+    align-items: flex-end;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr !important;
+    }
+
+    button {
+      @media (max-width: 768px) {
+        width: 100%;
+        margin-top: 0.5rem;
+      }
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .navbar {
+    &__container {
+      padding: 1rem;
+    }
+
+    &__title {
+      font-size: 1.25rem;
+    }
+
+    &__links {
+      width: 100%;
+      justify-content: space-around;
+    }
+
+    &__link {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.875rem;
+    }
+  }
+
+  .page {
+    padding: 1rem;
+
+    &__title {
+      font-size: 2rem;
+    }
+  }
+
+  .weekly-planner {
+    grid-template-columns: 1fr;
+  }
+
+  .cart-item {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+}
