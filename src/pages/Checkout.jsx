@@ -3,6 +3,14 @@ import { useNavigate } from 'react-router-dom'
 import { AppContext } from '../components/Layout'
 import { INGREDIENT_CATEGORIES } from '../data/recipes'
 
+// Formato de precio: sin decimales y con punto como separador de miles
+function formatPrice(value) {
+  const n = Math.round(Number(value))
+  if (Number.isNaN(n)) return '0'
+  // Convertir a string y agregar puntos cada 3 dígitos desde la derecha
+  return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+}
+
 const Checkout = () => {
   const navigate = useNavigate()
   const { shoppingCart, removeFromCart, updateCartQuantity, clearCart } = useContext(AppContext)
@@ -15,9 +23,9 @@ const Checkout = () => {
       return
     }
 
-    // Simulación de compra exitosa
+  // Simulación de compra exitosa
     const itemsCount = shoppingCart.reduce((sum, item) => sum + item.quantity, 0)
-    alert(`✅ ¡Compra realizada con éxito!\n\n${itemsCount} productos por $${total.toFixed(2)}\n\nTus productos llegarán en 2-3 días hábiles.`)
+  alert(`✅ ¡Compra realizada con éxito!\n\n${itemsCount} productos por $${formatPrice(total)}\n\nTus productos llegararán en 2-3 días hábiles.`)
     clearCart()
     navigate('/planificador')
   }
@@ -96,7 +104,7 @@ const Checkout = () => {
                       </button>
                     </div>
                     <div className="cart-item__price">
-                      ${(item.price * item.quantity).toFixed(2)}
+                      ${formatPrice(item.price * item.quantity)}
                     </div>
                     <button
                       className="cart-item__remove"
@@ -117,7 +125,7 @@ const Checkout = () => {
             <h3 className="summary-card__title">Resumen del Pedido</h3>
             <div className="summary-card__row">
               <span>Productos ({shoppingCart.reduce((sum, item) => sum + item.quantity, 0)})</span>
-              <span>${total.toFixed(2)}</span>
+              <span>${formatPrice(total)}</span>
             </div>
             <div className="summary-card__row">
               <span>Envío</span>
@@ -126,7 +134,7 @@ const Checkout = () => {
             <div className="summary-card__divider"></div>
             <div className="summary-card__row summary-card__total">
               <span>Total</span>
-              <span>${total.toFixed(2)}</span>
+              <span>${formatPrice(total)}</span>
             </div>
             <button 
               className="btn btn--primary btn--block"

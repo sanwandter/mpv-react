@@ -5,6 +5,14 @@ import { AppContext } from '../components/Layout'
 import RecipeCard from '../components/RecipeCard'
 import Modal from '../components/Modal'
 
+// Formato de precio: sin decimales y con punto como separador de miles
+function formatPrice(value) {
+  const n = Math.round(Number(value))
+  if (Number.isNaN(n)) return '0'
+  // Convertir a string y agregar puntos cada 3 dígitos desde la derecha
+  return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+}
+
 const RecipesCatalog = () => {
   const navigate = useNavigate()
   const { addRecipeToMenu, weeklyMenu } = useContext(AppContext)
@@ -214,13 +222,13 @@ const RecipesCatalog = () => {
                 {selectedRecipe.ingredients.map(ing => (
                   <li key={ing.id}>
                     {ing.name} - {ing.amount} {ing.unit}
-                    <span className="price">${ing.price.toFixed(2)}</span>
+                    <span className="price">${formatPrice(ing.price)}</span>
                   </li>
                 ))}
               </ul>
               <div className="recipe-details__total">
                 <strong>Costo total estimado: </strong>
-                ${selectedRecipe.ingredients.reduce((sum, ing) => sum + ing.price, 0).toFixed(2)}
+                ${formatPrice(selectedRecipe.ingredients.reduce((sum, ing) => sum + ing.price, 0))}
               </div>
               <div className="recipe-details__actions">
                 <button 

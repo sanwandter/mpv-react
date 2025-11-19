@@ -3,6 +3,14 @@ import { useNavigate } from 'react-router-dom'
 import { AppContext } from '../components/Layout'
 import { INGREDIENT_CATEGORIES } from '../data/recipes'
 
+// Formato de precio: sin decimales y con punto como separador de miles
+function formatPrice(value) {
+  const n = Math.round(Number(value))
+  if (Number.isNaN(n)) return '0'
+  // Convertir a string y agregar puntos cada 3 dígitos desde la derecha
+  return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+}
+
 const ShoppingList = () => {
   const navigate = useNavigate()
   const { weeklyMenu, ownedIngredients, toggleOwnedIngredient, addToCart } = useContext(AppContext)
@@ -105,7 +113,7 @@ const ShoppingList = () => {
         <div className="shopping-summary__stat">
           <span className="shopping-summary__label">Costo estimado</span>
           <span className="shopping-summary__number">
-            ${neededIngredients.reduce((sum, ing) => sum + ing.price, 0).toFixed(2)}
+            ${formatPrice(neededIngredients.reduce((sum, ing) => sum + ing.price, 0))}
           </span>
         </div>
       </div>
@@ -144,7 +152,7 @@ const ShoppingList = () => {
                       </span>
                     </div>
                     <span className="ingredient-item__price">
-                      ${ingredient.price.toFixed(2)}
+                      ${formatPrice(ingredient.price)}
                     </span>
                   </div>
                 )
