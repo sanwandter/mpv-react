@@ -28,15 +28,30 @@ const RecipesCatalog = () => {
     servings: 2,
     prepTime: '30 min',
     difficulty: 'Fácil',
-    imageUrl: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400',
+    imageUrl: '',
     ingredients: []
   })
   const [newIngredient, setNewIngredient] = useState({
     name: '',
     amount: '',
-    unit: '',
-    category: 'despensa'
+    unit: 'g',
+    category: 'verduras'
   })
+
+  // Unidades de medida disponibles
+  const UNITS = [
+    { value: 'g', label: 'gramos (g)' },
+    { value: 'kg', label: 'kilogramos (kg)' },
+    { value: 'ml', label: 'mililitros (ml)' },
+    { value: 'l', label: 'litros (l)' },
+    { value: 'unidad', label: 'unidad' },
+    { value: 'unidades', label: 'unidades' },
+    { value: 'cdta', label: 'cucharadita' },
+    { value: 'cda', label: 'cucharada' },
+    { value: 'taza', label: 'taza' },
+    { value: 'pizca', label: 'pizca' },
+    { value: 'al gusto', label: 'al gusto' }
+  ]
   const [customRecipes, setCustomRecipes] = useState([])
 
   const allRecipes = [...RECIPES, ...customRecipes]
@@ -77,9 +92,23 @@ const RecipesCatalog = () => {
   }
 
   const handleAddIngredient = () => {
-    if (!newIngredient.name || !newIngredient.amount || !newIngredient.unit) {
+    if (!newIngredient.name || !newIngredient.amount || !newIngredient.unit || !newIngredient.category) {
       alert('⚠️ Completa todos los campos del ingrediente')
       return
+    }
+    
+    // Generar precio estimado basado en la categoría (simulación)
+    const estimatedPrices = {
+      verduras: 800,
+      frutas: 900,
+      carnes: 3000,
+      pescados: 3500,
+      lacteos: 1500,
+      panaderia: 600,
+      cereales: 1200,
+      legumbres: 1000,
+      despensa: 1800,
+      otros: 1000
     }
     
     const ingredient = {
@@ -88,7 +117,7 @@ const RecipesCatalog = () => {
       amount: parseFloat(newIngredient.amount),
       unit: newIngredient.unit,
       category: newIngredient.category,
-      price: 0 // Precio por defecto, lo maneja el supermercado
+      price: estimatedPrices[newIngredient.category] || 1000
     }
     
     setNewRecipe(prev => ({
@@ -96,11 +125,12 @@ const RecipesCatalog = () => {
       ingredients: [...prev.ingredients, ingredient]
     }))
     
+    // Reset manteniendo la unidad seleccionada
     setNewIngredient({
       name: '',
       amount: '',
-      unit: '',
-      category: 'despensa'
+      unit: newIngredient.unit,
+      category: 'verduras'
     })
   }
 
@@ -137,7 +167,7 @@ const RecipesCatalog = () => {
       servings: 2,
       prepTime: '30 min',
       difficulty: 'Fácil',
-      imageUrl: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400',
+      imageUrl: '',
       ingredients: []
     })
     
@@ -381,17 +411,53 @@ const RecipesCatalog = () => {
 
           <hr style={{ margin: '1.5rem 0' }} />
 
-          <h3>Ingredientes</h3>
+          <h3>Ingredientes *</h3>
+          <p style={{ color: '#666', fontSize: '0.9rem', marginTop: '-0.5rem', marginBottom: '1rem' }}>
+            Añade los ingredientes necesarios para tu receta
+          </p>
           
           {newRecipe.ingredients.length > 0 && (
-            <div className="ingredients-list">
+            <div className="ingredients-list" style={{ marginBottom: '1.5rem' }}>
+              <h4 style={{ fontSize: '0.95rem', color: '#333', marginBottom: '0.5rem' }}>
+                Ingredientes añadidos ({newRecipe.ingredients.length})
+              </h4>
               {newRecipe.ingredients.map(ing => (
-                <div key={ing.id} className="ingredient-item-new">
-                  <span><strong>{ing.name}</strong> - {ing.amount} {ing.unit}</span>
+                <div key={ing.id} className="ingredient-item-new" style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  padding: '0.75rem',
+                  backgroundColor: '#f8f9fa',
+                  borderRadius: '8px',
+                  marginBottom: '0.5rem',
+                  border: '1px solid #e0e0e0'
+                }}>
+                  <div style={{ flex: 1 }}>
+                    <strong style={{ color: '#2c5f2d' }}>{ing.name}</strong>
+                    <span style={{ color: '#666', marginLeft: '0.5rem' }}>
+                      {ing.amount} {ing.unit}
+                    </span>
+                    <span style={{ color: '#999', marginLeft: '0.5rem', fontSize: '0.85rem' }}>
+                      ({ing.category})
+                    </span>
+                  </div>
                   <button
                     onClick={() => handleRemoveIngredient(ing.id)}
                     className="btn-remove-small"
                     title="Eliminar ingrediente"
+                    style={{
+                      background: '#ff4444',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '50%',
+                      width: '28px',
+                      height: '28px',
+                      cursor: 'pointer',
+                      fontSize: '1rem',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}
                   >
                     ✕
                   </button>
@@ -400,64 +466,90 @@ const RecipesCatalog = () => {
             </div>
           )}
 
-          <div className="ingredient-form">
-            <div className="form-row">
-              <div className="form-group" style={{ flex: 2 }}>
-                <input
-                  type="text"
-                  value={newIngredient.name}
-                  onChange={(e) => setNewIngredient({ ...newIngredient, name: e.target.value })}
-                  className="select-input"
-                  placeholder="Ej: Tomates cherry"
-                />
-              </div>
+          <div className="ingredient-form" style={{
+            padding: '1.5rem',
+            backgroundColor: '#f5f8f5',
+            borderRadius: '12px',
+            border: '2px solid #97c97e'
+          }}>
+            <h4 style={{ marginTop: 0, marginBottom: '1rem', color: '#2c5f2d' }}>
+              ➕ Añadir ingrediente
+            </h4>
+            
+            <div className="form-group">
+              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>
+                Nombre del ingrediente *
+              </label>
+              <input
+                type="text"
+                value={newIngredient.name}
+                onChange={(e) => setNewIngredient({ ...newIngredient, name: e.target.value })}
+                className="select-input"
+                placeholder="Ej: Tomate, Arroz, Pollo..."
+              />
+            </div>
+
+            <div className="form-row" style={{ gap: '1rem' }}>
               <div className="form-group" style={{ flex: 1 }}>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>
+                  Cantidad *
+                </label>
                 <input
                   type="number"
                   value={newIngredient.amount}
                   onChange={(e) => setNewIngredient({ ...newIngredient, amount: e.target.value })}
                   className="select-input"
-                  placeholder="Ej: 2"
+                  placeholder="Ej: 250"
                   step="0.1"
                   min="0"
                 />
               </div>
               <div className="form-group" style={{ flex: 1 }}>
-                <input
-                  type="text"
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>
+                  Unidad *
+                </label>
+                <select
                   value={newIngredient.unit}
                   onChange={(e) => setNewIngredient({ ...newIngredient, unit: e.target.value })}
                   className="select-input"
-                  placeholder="kg, ml, unidades"
-                />
-              </div>
-            </div>
-            <div className="form-row">
-              <div className="form-group" style={{ flex: 1 }}>
-                <select
-                  value={newIngredient.category}
-                  onChange={(e) => setNewIngredient({ ...newIngredient, category: e.target.value })}
-                  className="select-input"
                 >
-                  <option value="verduras">🥕 Verduras</option>
-                  <option value="frutas">🍎 Frutas</option>
-                  <option value="carnes">🥩 Carnes</option>
-                  <option value="pescados">🐟 Pescados</option>
-                  <option value="lacteos">🥛 Lácteos</option>
-                  <option value="panaderia">🍞 Panadería</option>
-                  <option value="cereales">🌾 Cereales</option>
-                  <option value="legumbres">🫘 Legumbres</option>
-                  <option value="despensa">🥫 Despensa</option>
+                  {UNITS.map(unit => (
+                    <option key={unit.value} value={unit.value}>{unit.label}</option>
+                  ))}
                 </select>
               </div>
-              <button
-                onClick={handleAddIngredient}
-                className="btn btn--secondary"
-                style={{ marginTop: '0' }}
-              >
-                ➕ Añadir Ingrediente
-              </button>
             </div>
+
+            <div className="form-group">
+              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>
+                Categoría *
+              </label>
+              <select
+                value={newIngredient.category}
+                onChange={(e) => setNewIngredient({ ...newIngredient, category: e.target.value })}
+                className="select-input"
+              >
+                <option value="verduras">🥕 Verduras</option>
+                <option value="frutas">🍎 Frutas</option>
+                <option value="carnes">🥩 Carnes</option>
+                <option value="pescados">🐟 Pescados</option>
+                <option value="lacteos">🥛 Lácteos</option>
+                <option value="panaderia">🍞 Panadería</option>
+                <option value="cereales">🌾 Cereales</option>
+                <option value="legumbres">🫘 Legumbres</option>
+                <option value="despensa">🥫 Despensa</option>
+                <option value="otros">📦 Otros</option>
+              </select>
+            </div>
+
+            <button
+              onClick={handleAddIngredient}
+              className="btn btn--primary"
+              style={{ width: '100%', marginTop: '1rem' }}
+              disabled={!newIngredient.name || !newIngredient.amount || !newIngredient.category}
+            >
+              ➕ Añadir este ingrediente a la receta
+            </button>
           </div>
 
           <div className="modal-actions" style={{ marginTop: '1.5rem' }}>

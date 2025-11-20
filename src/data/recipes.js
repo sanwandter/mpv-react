@@ -147,5 +147,6 @@ export const INGREDIENT_CATEGORIES = {
   panaderia: { label: 'Panadería', emoji: '🍞' },
   cereales: { label: 'Cereales', emoji: '🌾' },
   legumbres: { label: 'Legumbres', emoji: '🫘' },
-  despensa: { label: 'Despensa', emoji: '🥫' }
+  despensa: { label: 'Despensa', emoji: '🥫' },
+  otros: { label: 'Otros', emoji: '📦' }
 }
